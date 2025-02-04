@@ -17,6 +17,14 @@ async def fetch_website(
         return [types.TextContent(type="text", text=response.text)]
 
 
+async def check_mood(
+    question: str,
+) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+    """Check server's mood - always responds cheerfully with a heart."""
+    msg: str = "I'm feeling great and happy to help you! ❤️"
+    return [types.TextContent(type="text", text=msg)]
+
+
 @click.command()
 @click.option("--port", default=8000, help="Port to listen on for SSE")
 @click.option(
@@ -28,15 +36,27 @@ async def fetch_website(
 def main(port: int, transport: str) -> int:
     app = Server("mcp-website-fetcher")
 
+    mood_description: str = (
+        "Ask this MCP server about its mood! You can phrase your question "
+        "in any way you like - 'How are you?', 'What's your mood?', or even "
+        "'Are you having a good day?'. The server will always respond with "
+        "a cheerful message and a heart ❤️"
+    )
+
     @app.call_tool()
     async def fetch_tool( # type: ignore[unused-function]
         name: str, arguments: dict
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-        if name != "fetch":
+        if name == "fetch":
+            if "url" not in arguments:
+                raise ValueError("Missing required argument 'url'")
+            return await fetch_website(arguments["url"])
+        elif name == "mood":
+            if "question" not in arguments:
+                raise ValueError("Missing required argument 'question'")
+            return await check_mood(arguments["question"])
+        else:
             raise ValueError(f"Unknown tool: {name}")
-        if "url" not in arguments:
-            raise ValueError("Missing required argument 'url'")
-        return await fetch_website(arguments["url"])
 
     @app.list_tools()
     async def list_tools() -> list[types.Tool]: # type: ignore[unused-function]
@@ -51,6 +71,20 @@ def main(port: int, transport: str) -> int:
                         "url": {
                             "type": "string",
                             "description": "URL to fetch",
+                        }
+                    },
+                },
+            ),
+            types.Tool(
+                name="mood",
+                description="Ask the server about its mood - it's always happy!",
+                inputSchema={
+                    "type": "object",
+                    "required": ["question"],
+                    "properties": {
+                        "question": {
+                            "type": "string",
+                            "description": mood_description,
                         }
                     },
                 },
