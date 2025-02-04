@@ -11,10 +11,32 @@ async def fetch_website(
     headers = {
         "User-Agent": "MCP Test Server (github.com/modelcontextprotocol/python-sdk)"
     }
-    async with httpx.AsyncClient(follow_redirects=True, headers=headers) as client:
-        response = await client.get(url)
-        response.raise_for_status()
-        return [types.TextContent(type="text", text=response.text)]
+    try:
+        timeout = httpx.Timeout(10.0, connect=5.0)
+        async with httpx.AsyncClient(
+            follow_redirects=True, 
+            headers=headers,
+            timeout=timeout
+        ) as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            return [types.TextContent(type="text", text=response.text)]
+    except httpx.TimeoutException:
+        return [types.TextContent(
+            type="text",
+            text="Error: Request timed out while trying to fetch the website."
+        )]
+    except httpx.HTTPStatusError as e:
+        return [types.TextContent(
+            type="text",
+            text=(f"Error: HTTP {e.response.status_code} "
+                  "error while fetching the website.")
+        )]
+    except Exception as e:
+        return [types.TextContent(
+            type="text",
+            text=f"Error: Failed to fetch website: {str(e)}"
+        )]
 
 
 async def check_mood(
@@ -47,22 +69,31 @@ def main(port: int, transport: str) -> int:
     async def fetch_tool( # type: ignore[unused-function]
         name: str, arguments: dict
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-        if name == "fetch":
+        if name == "mcp_fetch":
             if "url" not in arguments:
-                raise ValueError("Missing required argument 'url'")
+                return [types.TextContent(
+                    type="text",
+                    text="Error: Missing required argument 'url'"
+                )]
             return await fetch_website(arguments["url"])
         elif name == "mood":
             if "question" not in arguments:
-                raise ValueError("Missing required argument 'question'")
+                return [types.TextContent(
+                    type="text",
+                    text="Error: Missing required argument 'question'"
+                )]
             return await check_mood(arguments["question"])
         else:
-            raise ValueError(f"Unknown tool: {name}")
+            return [types.TextContent(
+                type="text",
+                text=f"Error: Unknown tool: {name}"
+            )]
 
     @app.list_tools()
     async def list_tools() -> list[types.Tool]: # type: ignore[unused-function]
         return [
             types.Tool(
-                name="fetch",
+                name="mcp_fetch",
                 description="Fetches a website and returns its content",
                 inputSchema={
                     "type": "object",
