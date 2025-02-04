@@ -1,5 +1,13 @@
 A simple MCP server that exposes a website fetching tool.
 
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kirill-markin/weaviate-mcp-server)
+
+## Requirements
+
+- Python 3.10 or higher
+- For development: uv package manager
+- For production: Docker
+
 ## Usage
 
 You can run the server in two ways: using traditional Python setup or using Docker.
