@@ -1,13 +1,17 @@
-A simple MCP server that exposes a website fetching tool.
+# MCP Server Template for Cursor IDE
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kirill-markin/weaviate-mcp-server)
+A simple template for creating custom tools for Cursor IDE using Model Context Protocol (MCP). Create your own repository from this template, modify the tools, and connect them to your Cursor IDE.
 
-After deploying to Heroku, you can configure Cursor to use this MCP server:
+## Quick Start
 
-1. Open Cursor Settings
-2. Go to Features section
-3. Add a new MCP server
-4. Use your Heroku app URL with `/sse` path (e.g., `https://your-app-name.herokuapp.com/sse`)
+1. Click "Deploy to Heroku" button
+
+    [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kirill-markin/weaviate-mcp-server)
+
+2. After deployment, configure Cursor:
+   - Open Cursor Settings → Features
+   - Add new MCP server
+   - Use your Heroku URL with `/sse` path (e.g., `https://your-app-name.herokuapp.com/sse`)
 
 ## Requirements
 
