@@ -1,7 +1,5 @@
 setup:
-  addons:
-    # Add any required addons here
-    # - plan: heroku-postgresql:hobby-dev
+  addons: []  # Empty array instead of null
 
 build:
   docker:
