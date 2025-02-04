@@ -2,6 +2,13 @@ A simple MCP server that exposes a website fetching tool.
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kirill-markin/weaviate-mcp-server)
 
+After deploying to Heroku, you can configure Cursor to use this MCP server:
+
+1. Open Cursor Settings
+2. Go to Features section
+3. Add a new MCP server
+4. Use your Heroku app URL with `/sse` path (e.g., `https://your-app-name.herokuapp.com/sse`)
+
 ## Requirements
 
 - Python 3.10 or higher
