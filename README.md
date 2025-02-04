@@ -13,6 +13,12 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
    - Add new MCP server
    - Use your Heroku URL with `/sse` path (e.g., `https://your-app-name.herokuapp.com/sse`)
 
+3. Test your agent's mood in Cursor:
+   - Ask your agent "Please ask about our server mood and let me know how it is."
+   - The server will respond with a cheerful message and a heart ❤️
+   
+   ![Server Mood Response](docs/images/server-mood.png)
+
 ## Requirements
 
 - Python 3.10 or higher
