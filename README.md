@@ -1,9 +1,6 @@
 # MCP Server Template for Cursor IDE
-[![smithery badge](https://smithery.ai/badge/@kirill-markin/example-mcp-server)](https://smithery.ai/server/@kirill-markin/example-mcp-server)
 
 A simple template for creating custom tools for Cursor IDE using Model Context Protocol (MCP). Create your own repository from this template, modify the tools, and connect them to your Cursor IDE.
-
-<a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
 
 ## Quick Start
 
@@ -31,14 +28,6 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
 ## Usage
 
 You can run the server in two ways: using traditional Python setup or using Docker.
-
-### Installing via Smithery
-
-To install MCP Server Template for Cursor IDE for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@kirill-markin/example-mcp-server):
-
-```bash
-npx -y @smithery/cli install @kirill-markin/example-mcp-server --client claude
-```
 
 ### Traditional Setup
 
@@ -186,3 +175,16 @@ The health check:
 - Verifies the SSE endpoint is responding
 - Retries 3 times before marking as unhealthy
 - Has a 10-second startup grace period
+
+## Additional options
+
+[![smithery badge](https://smithery.ai/badge/@kirill-markin/example-mcp-server)](https://smithery.ai/server/@kirill-markin/example-mcp-server)
+<a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
+
+### Installing via Smithery
+
+To install MCP Server Template for Cursor IDE for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@kirill-markin/example-mcp-server):
+
+```bash
+npx -y @smithery/cli install @kirill-markin/example-mcp-server --client claude
+```
