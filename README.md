@@ -179,7 +179,6 @@ The health check:
 ## Additional options
 
 [![smithery badge](https://smithery.ai/badge/@kirill-markin/example-mcp-server)](https://smithery.ai/server/@kirill-markin/example-mcp-server)
-<a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
 
 ### Installing via Smithery
 
@@ -188,3 +187,6 @@ To install MCP Server Template for Cursor IDE for Claude Desktop automatically v
 ```bash
 npx -y @smithery/cli install @kirill-markin/example-mcp-server --client claude
 ```
+
+<a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
+
