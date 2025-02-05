@@ -188,5 +188,7 @@ To install MCP Server Template for Cursor IDE for Claude Desktop automatically v
 npx -y @smithery/cli install @kirill-markin/example-mcp-server --client claude
 ```
 
+### glama server review
+
 <a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
 
