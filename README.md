@@ -3,6 +3,8 @@
 
 A simple template for creating custom tools for Cursor IDE using Model Context Protocol (MCP). Create your own repository from this template, modify the tools, and connect them to your Cursor IDE.
 
+<a href="https://glama.ai/mcp/servers/jgisqn8zco"><img width="380" height="200" src="https://glama.ai/mcp/servers/jgisqn8zco/badge" alt="Server Template for Cursor IDE MCP server" /></a>
+
 ## Quick Start
 
 1. Click "Deploy to Heroku" button
