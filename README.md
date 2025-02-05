@@ -19,27 +19,26 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
    
    ![Server Mood Response](docs/images/server-mood.png)
 
-## Requirements
-
-- Python 3.10 or higher
-- For development: uv package manager
-- For production: Docker
-
 ## Usage
 
-You can run the server in two ways: using traditional Python setup or using Docker.
+You can run the server in three ways: using Cursor IDE locally, using Docker and using traditional Python setup.
 
-### Traditional Setup
+### Use in Cursor IDE Locally without running the server
 
-Start the server using either stdio (default) or SSE transport:
+To connect your local MCP server to Cursor IDE:
 
-```bash
-# Using stdio transport (default)
-uv run mcp-simple-tool
+1. Right-click on the `cursor-run-mcp-server.sh` file in Cursor
+2. Select "Copy Path" to copy the absolute path
+3. Open Cursor Settings (gear icon)
+4. Navigate to Features tab
+5. Scroll down to "MCP Servers"
+6. Click "Add new MCP server"
+7. Fill in the form:
+   - Name: Choose any name (e.g., "my-mcp-server-1")
+   - Type: Select "stdio" (not "sse" because we run the server locally)
+   - Command: Paste the absolute path to `cursor-run-mcp-server.sh` that you copied earlier. For example: `/Users/kirillmarkin/weaviate-mcp-server/cursor-run-mcp-server.sh`
 
-# Using SSE transport on custom port
-uv run mcp-simple-tool --transport sse --port 8000
-```
+The server should now be connected and ready to use in Cursor IDE.
 
 ### Docker Setup
 
@@ -77,6 +76,33 @@ docker compose down
 ```bash
 # Test the server endpoint
 curl -i http://localhost:8000/sse
+```
+
+### Traditional Setup
+
+First, install the uv package manager:
+
+```bash
+# Install uv on macOS
+brew install uv
+# Or install via pip (any OS)
+pip install uv
+```
+
+Start the server using either stdio (default) or SSE transport:
+
+```bash
+# Install the package with development dependencies
+uv pip install -e ".[dev]"
+
+# Using stdio transport (default)
+uv run mcp-simple-tool
+
+# Using SSE transport on custom port
+uv run mcp-simple-tool --transport sse --port 8000
+
+# Run tests
+uv run pytest -v
 ```
 
 ### Environment Variables
