@@ -13,13 +13,13 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
 2. After deployment, configure Cursor:
    - Open Cursor Settings → Features
    - Add new MCP server
-   - Use your Heroku URL with `/sse` path (e.g., `https://your-app-name.herokuapp.com/sse`)
+   - Use your Heroku URL with `/sse` path (e.g., `https://<your-app-name>.herokuapp.com/sse`)
 
 3. Test your agent's mood in Cursor:
    - Ask your agent "Please ask about our server mood and let me know how it is."
    - The server will respond with a cheerful message and a heart ❤️
 
-## Usage
+## Alternative Setup Methods
 
 You can run the server in three ways: using Docker, traditional Python setup, or directly in Cursor IDE.
 
