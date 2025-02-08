@@ -2,6 +2,8 @@
 
 A simple template for creating custom tools for Cursor IDE using Model Context Protocol (MCP). Create your own repository from this template, modify the tools, and connect them to your Cursor IDE.
 
+![Server Mood Response](docs/images/server-mood.png)
+
 ## Quick Start
 
 1. Click "Deploy to Heroku" button
@@ -16,8 +18,6 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
 3. Test your agent's mood in Cursor:
    - Ask your agent "Please ask about our server mood and let me know how it is."
    - The server will respond with a cheerful message and a heart ❤️
-   
-   ![Server Mood Response](docs/images/server-mood.png)
 
 ## Usage
 
