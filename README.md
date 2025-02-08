@@ -21,24 +21,7 @@ A simple template for creating custom tools for Cursor IDE using Model Context P
 
 ## Usage
 
-You can run the server in three ways: using Cursor IDE locally, using Docker and using traditional Python setup.
-
-### Use in Cursor IDE Locally without running the server
-
-To connect your local MCP server to Cursor IDE:
-
-1. Right-click on the `cursor-run-mcp-server.sh` file in Cursor
-2. Select "Copy Path" to copy the absolute path
-3. Open Cursor Settings (gear icon)
-4. Navigate to Features tab
-5. Scroll down to "MCP Servers"
-6. Click "Add new MCP server"
-7. Fill in the form:
-   - Name: Choose any name (e.g., "my-mcp-server-1")
-   - Type: Select "stdio" (not "sse" because we run the server locally)
-   - Command: Paste the absolute path to `cursor-run-mcp-server.sh` that you copied earlier. For example: `/Users/kirillmarkin/weaviate-mcp-server/cursor-run-mcp-server.sh`
-
-The server should now be connected and ready to use in Cursor IDE.
+You can run the server in three ways: using Docker, traditional Python setup, or directly in Cursor IDE.
 
 ### Docker Setup
 
@@ -78,6 +61,12 @@ docker compose down
 curl -i http://localhost:8000/sse
 ```
 
+5. Connect to Cursor IDE:
+   - Open Cursor Settings → Features
+   - Add new MCP server
+   - Type: Select "sse"
+   - URL: Enter `http://localhost:8000/sse`
+
 ### Traditional Setup
 
 First, install the uv package manager:
@@ -104,6 +93,19 @@ uv run mcp-simple-tool --transport sse --port 8000
 # Run tests
 uv run pytest -v
 ```
+
+After installation, you can connect the server directly to Cursor IDE:
+
+1. Right-click on the `cursor-run-mcp-server.sh` file in Cursor
+2. Select "Copy Path" to copy the absolute path
+3. Open Cursor Settings (gear icon)
+4. Navigate to Features tab
+5. Scroll down to "MCP Servers"
+6. Click "Add new MCP server"
+7. Fill in the form:
+   - Name: Choose any name (e.g., "my-mcp-server-1")
+   - Type: Select "stdio" (not "sse" because we run the server locally)
+   - Command: Paste the absolute path to `cursor-run-mcp-server.sh` that you copied earlier. For example: `/Users/kirillmarkin/weaviate-mcp-server/cursor-run-mcp-server.sh`
 
 ### Environment Variables
 
