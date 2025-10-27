@@ -1,50 +1,8 @@
 import anyio
 import click
-import httpx
 import mcp.types as types
 from mcp.server.lowlevel import Server
-
-
-async def fetch_website(
-    url: str,
-) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-    headers = {
-        "User-Agent": "MCP Test Server (github.com/modelcontextprotocol/python-sdk)"
-    }
-    try:
-        timeout = httpx.Timeout(10.0, connect=5.0)
-        async with httpx.AsyncClient(
-            follow_redirects=True, 
-            headers=headers,
-            timeout=timeout
-        ) as client:
-            response = await client.get(url)
-            response.raise_for_status()
-            return [types.TextContent(type="text", text=response.text)]
-    except httpx.TimeoutException:
-        return [types.TextContent(
-            type="text",
-            text="Error: Request timed out while trying to fetch the website."
-        )]
-    except httpx.HTTPStatusError as e:
-        return [types.TextContent(
-            type="text",
-            text=(f"Error: HTTP {e.response.status_code} "
-                  "error while fetching the website.")
-        )]
-    except Exception as e:
-        return [types.TextContent(
-            type="text",
-            text=f"Error: Failed to fetch website: {str(e)}"
-        )]
-
-
-async def check_mood(
-    question: str,
-) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-    """Check server's mood - always responds cheerfully with a heart."""
-    msg: str = "I'm feeling great and happy to help you! ❤️"
-    return [types.TextContent(type="text", text=msg)]
+from .cisa_vuln_checker import check_cve_exists, get_recent_cves
 
 
 @click.command()
@@ -69,20 +27,20 @@ def main(port: int, transport: str) -> int:
     async def fetch_tool( # type: ignore[unused-function]
         name: str, arguments: dict
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-        if name == "mcp_fetch":
-            if "url" not in arguments:
+        if name == "get_recent_cves":
+            if "days" not in arguments:
                 return [types.TextContent(
                     type="text",
-                    text="Error: Missing required argument 'url'"
+                    text="Error: Missing required argument 'days'"
                 )]
-            return await fetch_website(arguments["url"])
-        elif name == "mood":
-            if "question" not in arguments:
+            return await get_recent_cves(arguments["days"])
+        elif name == "check_cve_exists":
+            if "cve_id" not in arguments:
                 return [types.TextContent(
                     type="text",
-                    text="Error: Missing required argument 'question'"
+                    text="Error: Missing required argument 'cve_id'"
                 )]
-            return await check_mood(arguments["question"])
+            return await check_cve_exists(arguments["cve_id"])
         else:
             return [types.TextContent(
                 type="text",
@@ -93,29 +51,29 @@ def main(port: int, transport: str) -> int:
     async def list_tools() -> list[types.Tool]: # type: ignore[unused-function]
         return [
             types.Tool(
-                name="mcp_fetch",
-                description="Fetches a website and returns its content",
+                name="get_recent_cves",
+                description="Get all CVEs added in the last X days.",
                 inputSchema={
                     "type": "object",
-                    "required": ["url"],
+                    "required": ["days"],
                     "properties": {
-                        "url": {
-                            "type": "string",
-                            "description": "URL to fetch",
+                        "days": {
+                            "type": "int",
+                            "description": "Number of days to look back",
                         }
                     },
                 },
             ),
             types.Tool(
-                name="mood",
-                description="Ask the server about its mood - it's always happy!",
+                name="check_cve_exists",
+                description="Check if a given CVE exists in the list and return its details.",
                 inputSchema={
                     "type": "object",
-                    "required": ["question"],
+                    "required": ["cve_id"],
                     "properties": {
-                        "question": {
+                        "cve_id": {
                             "type": "string",
-                            "description": mood_description,
+                            "description": "The CVE ID to check (e.g., 'CVE-2023-1234')",
                         }
                     },
                 },
