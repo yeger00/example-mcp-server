@@ -126,6 +126,8 @@ def main(port: int, transport: str) -> int:
         from mcp.server.sse import SseServerTransport
         from starlette.applications import Starlette
         from starlette.routing import Mount, Route
+        from starlette.middleware import Middleware
+        from starlette.middleware.cors import CORSMiddleware
 
         sse = SseServerTransport("/messages/")
 
@@ -143,6 +145,15 @@ def main(port: int, transport: str) -> int:
                 Route("/sse", endpoint=handle_sse),
                 Mount("/messages/", app=sse.handle_post_message),
             ],
+        )
+
+        # Taken from: https://github.com/jlowin/fastmcp/issues/840#issuecomment-3381053306
+        starlette_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],  # Allows all origins
+            allow_credentials=True,
+            allow_methods=["*"],  # Allows all methods
+            allow_headers=["*"],  # Allows all headers
         )
 
         import uvicorn
