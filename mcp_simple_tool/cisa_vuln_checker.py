@@ -22,7 +22,7 @@ def get_recent_cves(days: Optional[int] = None, hours: Optional[int] = None) -> 
     if days is not None:
         cutoff_date = now - timedelta(days=days)
     else:
-        cutoff_date = now - timedelta(hours=hours)
+        cutoff_date = now - timedelta(days=1)
     
     # Query the JSON file directly from URL using DuckDB
     conn = duckdb.connect()

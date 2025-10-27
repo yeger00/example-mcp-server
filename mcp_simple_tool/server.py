@@ -14,33 +14,28 @@ from .cisa_vuln_checker import check_cve_exists, get_recent_cves
     help="Transport type",
 )
 def main(port: int, transport: str) -> int:
+    print("hello")
     app = Server("mcp-website-fetcher")
-
-    mood_description: str = (
-        "Ask this MCP server about its mood! You can phrase your question "
-        "in any way you like - 'How are you?', 'What's your mood?', or even "
-        "'Are you having a good day?'. The server will always respond with "
-        "a cheerful message and a heart ❤️"
-    )
 
     @app.call_tool()
     async def fetch_tool( # type: ignore[unused-function]
         name: str, arguments: dict
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+        print("hello2")
         if name == "get_recent_cves":
             if "days" not in arguments:
                 return [types.TextContent(
                     type="text",
                     text="Error: Missing required argument 'days'"
                 )]
-            return await get_recent_cves(arguments["days"])
+            return get_recent_cves(arguments["days"])
         elif name == "check_cve_exists":
             if "cve_id" not in arguments:
                 return [types.TextContent(
                     type="text",
                     text="Error: Missing required argument 'cve_id'"
                 )]
-            return await check_cve_exists(arguments["cve_id"])
+            return check_cve_exists(arguments["cve_id"])
         else:
             return [types.TextContent(
                 type="text",
@@ -49,6 +44,7 @@ def main(port: int, transport: str) -> int:
 
     @app.list_tools()
     async def list_tools() -> list[types.Tool]: # type: ignore[unused-function]
+        print("hello3")
         return [
             types.Tool(
                 name="get_recent_cves",
